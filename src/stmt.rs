@@ -14,6 +14,18 @@ pub enum Stmt {
     Code(CodeStmt),
 }
 
+impl Stmt {
+    pub fn accept<R>(&self, visitor: &mut impl StmtVisitor<R>) -> R {
+        match self {
+            Stmt::Header(stmt) => visitor.visit_header(stmt),
+            Stmt::Paragraph(stmt) => visitor.visit_paragraph(stmt),
+            Stmt::List(stmt) => visitor.visit_list(stmt),
+            Stmt::Blockquote(stmt) => visitor.visit_blockquote(stmt),
+            Stmt::Code(stmt) => visitor.visit_code(stmt),
+        }
+    }
+}
+
 pub enum Inline {
     Text(String),
     Emphasis(Vec<Inline>),     // * / _

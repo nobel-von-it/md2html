@@ -33,5 +33,8 @@ impl Token {
             line,
         }
     }
-}
 
+    pub fn is_tt(&self, tt: &TokenType) -> bool {
+        self.token_type.eq(tt)
+    }
+}
